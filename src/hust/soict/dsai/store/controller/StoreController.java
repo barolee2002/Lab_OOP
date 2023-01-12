@@ -1,32 +1,39 @@
 package hust.soict.dsai.store.controller;
 
 
+
 import hust.soict.dsai.cart.Cart;
 import hust.soict.dsai.data.InitData;
+import hust.soict.dsai.exception.PlayerException;
 import hust.soict.dsai.media.CompactDisc;
 import hust.soict.dsai.media.DigitalVideoDisc;
 import hust.soict.dsai.store.Store;
 
+import javax.naming.LimitExceededException;
 import java.util.Scanner;
 
 public class StoreController {
     public static Store myStore = InitData.myStore;
     public static Cart myCart = InitData.myCart;
 
-    
-     // In các sản phẩm có trong giỏ hàng
-    
+    /**
+     * In các sản phẩm có trong giỏ hàng
+     */
     public static void printStore() {
         System.out.println("Danh sách các sản phẩm có trong cửa hàng");
         myStore.printStore();
     }
 
-    
-     //Thêm sản phẩm vào cart
-    
+    /**
+     * Thêm sản phẩm vào cart
+     */
     public static void addToCart() {
         int productIndex = getIndex();
-        myCart.addMedia(myStore.getItemByIndex(productIndex));
+        try {
+            myCart.addMedia(myStore.getItemByIndex(productIndex));
+        } catch (LimitExceededException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Số sản phẩm có trong giỏ hàng là: " + myCart.getCountItem());
     }
 

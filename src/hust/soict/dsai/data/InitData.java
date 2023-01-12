@@ -7,31 +7,33 @@ import hust.soict.dsai.media.DigitalVideoDisc;
 import hust.soict.dsai.media.model.Track;
 import hust.soict.dsai.store.Store;
 
+import javax.naming.LimitExceededException;
 public class InitData {
     public static final Store myStore = new Store();
     public static final Cart myCart = new Cart();
 
-    public static void init() {
+    public static void init() throws LimitExceededException {
         // Tạo các DVD có trong cửa hàng
-        DigitalVideoDisc dvd1 = new DigitalVideoDisc("Doraemon", "Hoạt hình", "ZZZ", 21 ,24.95f);
-        DigitalVideoDisc dvd2 = new DigitalVideoDisc("Conan", "Hoạt hình", "Change", 54 ,99.7f);
-        DigitalVideoDisc dvd3 = new DigitalVideoDisc("luffy", "Hoạt hình", "ABC", 65 ,90f);
+        DigitalVideoDisc dvd1 = new DigitalVideoDisc("Doraemon", "Hoạt hình", "Fujiko Fujio", 34 ,52.55f);
+        DigitalVideoDisc dvd2 = new DigitalVideoDisc("Titanic", "film", "James Cameron", 56 ,654.44f);
+        DigitalVideoDisc dvd3 = new DigitalVideoDisc("Em và Trịnh", "film", "Phan Gia Nhật Linh", 23 ,879.55f);
         // Tạo các CD có trong cửa hàng
-        CompactDisc cd1 = new CompactDisc("Nguyễn Hồng Sơn", "Nhạc của tôi");
-        cd1.addTrack(new Track("Sơn 1", 13));
-        cd1.addTrack(new Track("Sơn 2", 24));
-        cd1.addTrack(new Track("Sơn 3", 24));
+        CompactDisc cd1 = new CompactDisc("Nguyễn Thanh Tùng", "SKY","Sơn Tùng MTP", 9999.99f);
+        cd1.addTrack(new Track("Em của ngày hôm qua", 4));
+        cd1.addTrack(new Track("Hãy trao cho anh", 6));
+        cd1.addTrack(new Track("Cơn mưa ngang qua", 7));
 
-        CompactDisc cd2 = new CompactDisc("Soobin Hoàng Sơn", "Đi để chở về");
-        cd2.addTrack(new Track("Đi để chở về 1", 2));
-        cd2.addTrack(new Track("Đi để chở về 2", 2));
-        cd2.addTrack(new Track("Đi để chở về 3", 3));
+        CompactDisc cd2 = new CompactDisc("Bùi Thị Bích Phương", "Đi đu đưa đi", "Bích Phương", 49.99f);
+        cd2.addTrack(new Track("Nếu em còn tồn tại", 2));
+        cd2.addTrack(new Track("Gửi anh xa nhớ", 2));
+        cd2.addTrack(new Track("Nằm ngủ emru", 3));
 
         // Tạo các Book có trong cửa hàng
-        Book book1 = new Book("Nhật chuyên ngành 1", "Tiếng Nhật", 21f);
-        Book book2 = new Book("Nhật chuyên ngành 2", "Tiếng Nhật", 25f);
-        Book book3 = new Book("Giải tích IV", "Toán cao cấp", 9999f);
+        Book book1 = new Book("GIà thiên", "Tiểu thuyết tiên hiệp", 56f);
+        Book book2 = new Book("Thế giới hoàn mỹ", "Tiểu thuyết tiên hiệp", 43f);
+        Book book3 = new Book("Thánh khư", "Tiểu Thuyết tiên hiệp", 67f);
         // Add vào store
         myStore.addMedia(dvd1, dvd2, dvd3, cd1, cd2, book1, book2, book3);
+        myCart.addMedia(dvd1, cd2);
     }
 }

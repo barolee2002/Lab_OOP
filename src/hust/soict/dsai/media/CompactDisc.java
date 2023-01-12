@@ -1,5 +1,7 @@
 package hust.soict.dsai.media;
 
+
+import hust.soict.dsai.exception.PlayerException;
 import hust.soict.dsai.media.model.Track;
 
 import java.util.ArrayList;
@@ -9,23 +11,37 @@ public class CompactDisc extends Disc implements Playable{
     private String artist;
     private List<Track> tracks = new ArrayList<Track>();
 
-    public CompactDisc() {
-        super();
-    }
+
     public CompactDisc(String artist) {
         super();
         this.artist = artist;
     }
 
-    public CompactDisc(String artist, String title) {
+    public CompactDisc(String artist, String title, Float cost) {
         super();
         this.artist = artist;
         this.setTitle(title);
+        this.setCost(cost);
     }
+
+    public CompactDisc(String artist, String title, String director, Float cost) {
+        super();
+        this.artist = artist;
+        this.setTitle(title);
+        this.setCost(cost);
+        this.setDirector(director);
+    }
+
     @Override
-    public void play() {
+    public void play() throws PlayerException {
         for(int i = 0; i < tracks.size(); i++) {
-            tracks.get(i).play();
+            Track currentTrack = tracks.get(i);
+            if(currentTrack.getLength() > 0) {
+                tracks.get(i).play();
+            } else {
+                throw new PlayerException("ERROR: CD length is non-positive!");
+            }
+
         }
     }
 
@@ -72,6 +88,6 @@ public class CompactDisc extends Disc implements Playable{
 
     @Override
     public String toString() {
-       return getId() + ". CD - " + getTitle() + " - tác giả: " + artist + " - độ dài: " + getLength();
+        return getId() + ". CD - " + getTitle() + " - tác giả: " + artist + " - độ dài: " + getLength();
     }
 }

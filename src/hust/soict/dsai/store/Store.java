@@ -4,10 +4,18 @@ package hust.soict.dsai.store;
 import hust.soict.dsai.media.DigitalVideoDisc;
 import hust.soict.dsai.media.Media;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Store {
-    private ArrayList<Media> itemsInStore = new ArrayList<Media>();
+    private ObservableList<Media> itemsInStore =  FXCollections.observableArrayList();
+
+    public ObservableList<Media> getItemsInStore() {
+        return itemsInStore;
+    }
 
     /**
      * Thêm 1 hay nhiều media vào cửa hàng
@@ -15,8 +23,11 @@ public class Store {
      */
     public void addMedia(Media ... args) {
         for(Media media : args) {
+            if(!itemsInStore.contains(media)) {
+                itemsInStore.add(media);
+            }
 //            System.out.printf("Thêm thành công sản phẩm %s với id: %d\n", media.getTitle(), media.getId());
-            itemsInStore.add(media);
+
         }
     }
 
@@ -82,4 +93,5 @@ public class Store {
     public Media getItemByIndex(int index) {
         return itemsInStore.get(index);
     }
+
 }

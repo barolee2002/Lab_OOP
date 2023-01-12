@@ -1,58 +1,48 @@
 package hust.soict.dsai.aims;
 
-import hust.soict.dsai.cart.controller.CartMenuController;
+
+import hust.soict.dsai.cart.Cart;
 import hust.soict.dsai.data.InitData;
-import hust.soict.dsai.store.controller.StoreMenuController;
-import java.util.Scanner;
+import hust.soict.dsai.screen.*;
+import hust.soict.dsai.store.Store;
+
+import javax.naming.LimitExceededException;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Aims {
-    public static void main(String[] args) {
+    private static JFrame currentView;
+    private static Store myStore;
+    private static Cart myCart;
+    public static void main(String[] args) throws LimitExceededException {
         // Khởi tạo data dùng chung
         InitData.init();
+        myStore = InitData.myStore;
+        myCart = InitData.myCart;
         // In menu ra màn hình
-        handleMainMenu();
-
+        currentView = new StoreScreen(myStore);
     }
 
-    /**
-     * Menu chính
-     */
-    public static void handleMainMenu() {
-        //Hiển thị menu
-        showMenu();
-        Scanner sc = new Scanner(System.in);
-        // Lấy lựa chọn của người dùng
-        int chosen = sc.nextInt();
-        int back = 0;
-        switch (chosen) {
-            case 1:
-                back = StoreMenuController.handleMenuStore();
-                break;
-            case 2:
-                back = StoreMenuController.handleUpdateStore();
-                break;
-            case 3:
-                back = CartMenuController.handleMenuCart();
-                break;
-            case 0:
-                return ;
-        }
-
-        if(back == 1) {
-            handleMainMenu();
+    // Khi click vào menu, cần hiển thị những chức năng tương ứng
+    public static class MenuItemListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String command = e.getActionCommand();
+            if(command.equals("view_store")) {
+                currentView = new StoreScreen(myStore);
+            } else if(command.equals("view_cart")) {
+                currentView = new CartScreen(myCart);
+            } else if(command.equals("add_dvd")) {
+                new AddDigitalVideoDiscToStoreScreen();
+            } else if(command.equals("add_cd")) {
+                new AddCompactDiscToStoreScreen();
+            }  else if(command.equals("add_book")) {
+                new AddBookToStoreScreen();
+            }
+            System.out.println(e.getActionCommand() + " JMenuItem clicked.");
         }
     }
 
-    public static void showMenu() {
-        System.out.println("AIMS: ");
-        System.out.println("--------------------------------");
-        System.out.println("1. Cửa hàng");
-        System.out.println("2. Cập nhật cửa hàng");
-        System.out.println("3. Giỏ hàng");
-        System.out.println("0. Thoát");
-        System.out.println("--------------------------------");
-        System.out.println("Nhập lựa chọn của bạn: 0-1-2-3");
-    }
 
 
 }
